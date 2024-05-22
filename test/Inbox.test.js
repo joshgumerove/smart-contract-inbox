@@ -30,7 +30,7 @@ describe("Inbox", () => {
   it("deploys a contract", () => {
     assert.ok(inbox.options.address);
   });
-  it("has a default message", async () => {
+  it("has a default message", () => {
     assert.equal(INITIAL_STRING, message);
   });
 });
