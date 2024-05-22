@@ -7,7 +7,6 @@ const { interface, bytecode } = require("../compile");
 
 let accounts;
 let inbox;
-let message;
 const INITIAL_STRING = "Hi there!";
 
 beforeEach(async () => {
@@ -22,15 +21,27 @@ beforeEach(async () => {
       from: accounts[0],
       gas: "1000000",
     });
-
-  message = await inbox.methods.message().call();
 });
 
 describe("Inbox", () => {
   it("deploys a contract", () => {
     assert.ok(inbox.options.address);
   });
-  it("has a default message", () => {
+
+  it("has a default message", async () => {
+    const message = await inbox.methods.message().call();
+
     assert.equal(INITIAL_STRING, message);
+  });
+
+  it("can change the message", async () => {
+    await inbox.methods.setMessage("Hello world").send({
+      from: accounts[0],
+    });
+
+    const message = await inbox.methods.message().call();
+
+    assert.notEqual(INITIAL_STRING, message);
+    assert.equal("Hello world", message);
   });
 });
