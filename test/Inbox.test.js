@@ -14,6 +14,6 @@ beforeEach(async () => {
 
 describe("Inbox", () => {
   it("deploys a contract", () => {
-    assert.notEqual([].length, accounts.length);
+    assert.equal(10, accounts.length);
   });
 });
